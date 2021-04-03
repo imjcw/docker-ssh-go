@@ -59,24 +59,12 @@ WORKDIR $GOPATH
 
 # 开放22端口
 EXPOSE 22
-EXPOSE 15000
-EXPOSE 16000
-EXPOSE 17000
-EXPOSE 18000
-EXPOSE 19000
-EXPOSE 20000
-EXPOSE 21000
-EXPOSE 22000
-EXPOSE 23000
-EXPOSE 24000
-EXPOSE 25000
 
 RUN touch /docker-entrypoint; \
 	{\
 		echo '#!/usr/bin/env sh'; \
 		echo ''; \
-		echo '/etc/init.d/ssh start'; \
-		echo '/bin/bash'; \
+		echo '/etc/init.d/ssh start -D'; \
 	} | tee /docker-entrypoint; \
 	chmod +x /docker-entrypoint
 
