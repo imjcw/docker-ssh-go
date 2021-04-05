@@ -3,22 +3,22 @@ FROM ubuntu:20.04
 
 # 替换阿里云的源
 RUN echo '' > /etc/apt/sources.list; \
-	{ \
-		echo 'deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse'; \
-		echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse'; \
-		echo 'deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse'; \
-		echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse'; \
-		echo 'deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse'; \
-		echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse'; \
-		echo 'deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse'; \
-		echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse'; \
-		echo 'deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse'; \
-		echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse'; \
-	} | tee /etc/apt/sources.list; \
-	apt update; \
-	apt install -y tzdata; \
-	cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
-	apt install -y openssh-server git; \
+    { \
+        echo 'deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse'; \
+	echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse'; \
+	echo 'deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse'; \
+	echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse'; \
+	echo 'deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse'; \
+	echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse'; \
+	echo 'deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse'; \
+	echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse'; \
+	echo 'deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse'; \
+	echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse'; \
+    } | tee /etc/apt/sources.list; \
+    apt update; \
+    apt install -y tzdata; \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
+    apt install -y openssh-server git; \
     sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config; \
     echo "root:1" | chpasswd;
 
@@ -27,33 +27,34 @@ ENV PATH /usr/local/go/bin:$PATH
 ENV GOLANG_VERSION 1.16.3
 
 RUN cd /tmp; \
-	wget -c https://golang.google.cn/dl/go1.16.3.linux-amd64.tar.gz -O go.tar.gz; \
-	tar -xz -C /usr/local -f go.tar.gz; \
-	rm -rf go.tar.gz; \
-	go version;
+    wget -c https://golang.google.cn/dl/go1.16.3.linux-amd64.tar.gz -O go.tar.gz; \
+    tar -xz -C /usr/local -f go.tar.gz; \
+    rm -rf go.tar.gz; \
+    go version;
 
 ENV GOPATH /root/go
 ENV PATH $GOPATH/bin:$PATH
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"; \
-	echo "PATH=/root/go/bin:/usr/local/go/bin:$PATH" >> /root/.bashrc;
+    echo "PATH=/root/go/bin:/usr/local/go/bin:$PATH" >> /root/.bashrc;
 
 RUN go get github.com/uudashr/gopkgs/v2/cmd/gopkgs; \
-	go get github.com/ramya-rao-a/go-outline; \
-	go get github.com/cweill/gotests/gotests; \
-	go get github.com/fatih/gomodifytags; \
-	go get github.com/josharian/impl; \
-	go get github.com/haya14busa/goplay/cmd/goplay; \
-	go get github.com/go-delve/delve/cmd/dlv; \
-	go get honnef.co/go/tools/cmd/staticcheck; \
-	go get golang.org/x/tools/gopls;
+    go get github.com/ramya-rao-a/go-outline; \
+    go get github.com/cweill/gotests/gotests; \
+    go get github.com/fatih/gomodifytags; \
+    go get github.com/josharian/impl; \
+    go get github.com/haya14busa/goplay/cmd/goplay; \
+    go get github.com/go-delve/delve/cmd/dlv; \
+    go get honnef.co/go/tools/cmd/staticcheck; \
+    go get golang.org/x/tools/gopls;
 
 RUN go get github.com/beego/bee; \
-	go get github.com/astaxie/beego; \
-	go get github.com/gin-gonic/gin;
+    go get github.com/astaxie/beego; \
+    go get github.com/astaxie/beego/validation; \
+    go get github.com/gin-gonic/gin;
 
-RUN	go env -w GO111MODULE="on"; \
-	go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct;
+RUN go env -w GO111MODULE="on"; \
+    go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct;
 
 WORKDIR $GOPATH
 
@@ -61,11 +62,11 @@ WORKDIR $GOPATH
 EXPOSE 22
 
 RUN touch /docker-entrypoint; \
-	{\
-		echo '#!/usr/bin/env sh'; \
-		echo ''; \
-		echo '/etc/init.d/ssh start -D'; \
-	} | tee /docker-entrypoint; \
-	chmod +x /docker-entrypoint
+    {\
+        echo '#!/usr/bin/env sh'; \
+	echo ''; \
+	echo '/etc/init.d/ssh start -D'; \
+    } | tee /docker-entrypoint; \
+    chmod +x /docker-entrypoint
 
 ENTRYPOINT ["/docker-entrypoint"]
