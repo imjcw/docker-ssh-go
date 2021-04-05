@@ -48,13 +48,14 @@ RUN go get github.com/uudashr/gopkgs/v2/cmd/gopkgs; \
     go get honnef.co/go/tools/cmd/staticcheck; \
     go get golang.org/x/tools/gopls;
 
-RUN go get github.com/beego/bee; \
-    go get github.com/astaxie/beego; \
-    go get github.com/astaxie/beego/validation; \
+RUN go get github.com/beego/bee/v2; \
+    go get github.com/beego/beego/v2; \
+    go get github.com/beego/beego/v2/core/validation; \
+    go get github.com/beego/beego/v2/client/orm; \
     go get github.com/gin-gonic/gin;
 
 RUN go env -w GO111MODULE="on"; \
-    go env -w GOPROXY=https://mirrors.aliyun.com/goproxy/,direct;
+    go env -w GOPROXY=https://goproxy.cn,direct;
 
 WORKDIR $GOPATH
 
