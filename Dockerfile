@@ -20,7 +20,9 @@ RUN echo '' > /etc/apt/sources.list; \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
     apt install -y openssh-server git; \
     sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config; \
-    echo "root:1" | chpasswd;
+    echo "root:1" | chpasswd; \
+    cd /root; \
+    mkdir .ssh;
 
 ENV PATH /usr/local/go/bin:$PATH
 
