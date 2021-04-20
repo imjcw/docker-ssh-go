@@ -16,7 +16,7 @@ RUN echo '' > /etc/apt/sources.list; \
 	echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse'; \
     } | tee /etc/apt/sources.list; \
     apt update; \
-    apt install -y tzdata; \
+    apt install -y tzdata make; \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
     apt install -y openssh-server git; \
     sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config; \
@@ -48,11 +48,11 @@ RUN go get github.com/uudashr/gopkgs/v2/cmd/gopkgs; \
     go get honnef.co/go/tools/cmd/staticcheck; \
     go get golang.org/x/tools/gopls;
 
-RUN go get github.com/beego/bee/v2; \
-    go get github.com/beego/beego/v2; \
-    go get github.com/beego/beego/v2/core/validation; \
-    go get github.com/beego/beego/v2/client/orm; \
-    go get github.com/gin-gonic/gin;
+# RUN go get github.com/beego/bee/v2; \
+#     go get github.com/beego/beego/v2; \
+#     go get github.com/beego/beego/v2/core/validation; \
+#     go get github.com/beego/beego/v2/client/orm; \
+#     go get github.com/gin-gonic/gin;
 
 RUN go env -w GO111MODULE="on"; \
     go env -w GOPROXY=https://goproxy.cn,direct;
