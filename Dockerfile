@@ -72,10 +72,8 @@ RUN touch /docker-entrypoint; \
     } | tee /docker-entrypoint; \
     chmod +x /docker-entrypoint
 
-RUN {\
-        echo 'RSAAuthentication yes'; \
-	echo 'PubkeyAuthentication yes'; \
-	echo 'AuthorizedKeysFile .ssh/authorized_keys'; \
-    } | tee /etc/ssh/sshd_config;
+RUN echo 'RSAAuthentication yes' >> /etc/ssh/sshd_config;\
+    echo 'PubkeyAuthentication yes' >> /etc/ssh/sshd_config;\
+    echo 'AuthorizedKeysFile .ssh/authorized_keys' >> /etc/ssh/sshd_config;
 
 ENTRYPOINT ["/docker-entrypoint"]
