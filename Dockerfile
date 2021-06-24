@@ -16,9 +16,9 @@ RUN echo '' > /etc/apt/sources.list; \
 	echo 'deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse'; \
     } | tee /etc/apt/sources.list; \
     apt update; \
-    apt install -y tzdata make gcc vi; \
+    apt install -y tzdata; \
     cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
-    apt install -y openssh-server git; \
+    apt install -y openssh-server git make gcc vim iputils-ping curl apache2-utils; \
     sed -i "s/#PermitRootLogin.*/PermitRootLogin yes/g" /etc/ssh/sshd_config; \
     echo "root:1" | chpasswd; \
     cd /root; \
