@@ -74,4 +74,6 @@ RUN touch /docker-entrypoint; \
 
 RUN echo 'AuthorizedKeysFile .ssh/authorized_keys' >> /etc/ssh/sshd_config;
 
+RUN curl -fsSL https://goo.gl/getgrpc | bash -s -- --with-plugins;
+
 ENTRYPOINT ["/docker-entrypoint"]
