@@ -40,15 +40,15 @@ ENV PATH $GOPATH/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"; \
     echo "PATH=/root/go/bin:/usr/local/go/bin:$PATH" >> /root/.bashrc;
 
-RUN go get github.com/uudashr/gopkgs/v2/cmd/gopkgs; \
-    go get github.com/ramya-rao-a/go-outline; \
-    go get github.com/cweill/gotests/gotests; \
-    go get github.com/fatih/gomodifytags; \
-    go get github.com/josharian/impl; \
-    go get github.com/haya14busa/goplay/cmd/goplay; \
-    go get github.com/go-delve/delve/cmd/dlv; \
-    go get honnef.co/go/tools/cmd/staticcheck; \
-    go get golang.org/x/tools/gopls;
+RUN go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest; \
+    go install github.com/ramya-rao-a/go-outline@latest; \
+    go install github.com/cweill/gotests/gotests@latest; \
+    go install github.com/fatih/gomodifytags@latest; \
+    go install github.com/josharian/impl@latest; \
+    go install github.com/haya14busa/goplay/cmd/goplay@latest; \
+    go install github.com/go-delve/delve/cmd/dlv@latest; \
+    go install honnef.co/go/tools/cmd/staticcheck@latest; \
+    go install golang.org/x/tools/gopls@latest;
 
 # RUN go get github.com/beego/bee/v2; \
 #     go get github.com/beego/beego/v2; \
