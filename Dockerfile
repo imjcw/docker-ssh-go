@@ -26,10 +26,10 @@ RUN echo '' > /etc/apt/sources.list; \
 
 ENV PATH /usr/local/go/bin:$PATH
 
-ENV GOLANG_VERSION 1.16.6
+ENV GOLANG_VERSION 1.18.7
 
 RUN cd /tmp; \
-    wget -c https://golang.google.cn/dl/go1.16.6.linux-amd64.tar.gz -O go.tar.gz; \
+    wget -c https://go.dev/dl/go1.18.7.linux-amd64.tar.gz -O go.tar.gz; \
     tar -xz -C /usr/local -f go.tar.gz; \
     rm -rf go.tar.gz; \
     go version;
