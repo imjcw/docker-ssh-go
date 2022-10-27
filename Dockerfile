@@ -51,7 +51,7 @@ RUN go install github.com/uudashr/gopkgs/v2/cmd/gopkgs@latest; \
     go install golang.org/x/tools/gopls@latest;
 
 # RUN go get github.com/beego/bee/v2; \
-#     go get github.com/beego/beego/v2; \
+#     go get github.com/beego/beego/v2;  \
 #     go get github.com/beego/beego/v2/core/validation; \
 #     go get github.com/beego/beego/v2/client/orm; \
 #     go get github.com/gin-gonic/gin;
